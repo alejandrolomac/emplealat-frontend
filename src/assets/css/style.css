@@ -1,0 +1,116 @@
+/*
+    * Emplealat 
+    * Version: 0.1
+    * Author: Spacecript - https://spacecript.com
+*/
+
+/*------------------------------------------------------
+Variables
+------------------------------------------------------*/
+
+:root 
+{
+    --e-white : #ddd;
+    --e-light-gray: #ccc;
+    --e-medium-gray: #667583;
+    --e-dark-gray: #454e56;
+    --e-black: #000;
+    --e-yellow: #edb84f;
+    --e-hover-yellow: #ed984f;
+    --e-light-blue: #f2f7fb;
+}
+
+/*------------------------------------------------------
+FONTS STYLES
+------------------------------------------------------*/
+
+@font-face {
+    font-family: mainFont;
+    src: url(../fonts/Roboto-Regular.ttf);
+    font-weight: normal;
+}
+
+@font-face {
+    font-family: mainFont;
+    src: url(../fonts/Roboto-Light.ttf);
+    font-weight: lighter;
+}
+
+@font-face {
+    font-family: mainFont;
+    src: url(../fonts/Roboto-Bold.ttf);
+    font-weight: bold;
+}
+
+@font-face {
+    font-family: mainFont;
+    src: url(../fonts/Roboto-Italic.ttf);
+    font-weight: normal;
+    font-style: italic;
+}
+
+/*------------------------------------------------------
+GENERAL STYLES
+------------------------------------------------------*/
+
+body
+{
+    color: var(--e-dark-gray);
+    font-family: mainFont, Helvetica, Arial;
+    font-weight: lighter;
+    font-size: 18px;
+}
+
+a { color: var(--e-yellow); font-weight: normal; }
+a:hover { color: var(--e-hover-yellow); }
+
+.btn { color: var(--e-dark-gray); background: var(--e-yellow); }
+.btn:hover { background: var(--e-hover-yellow); }
+
+/*------------------------------------------------------
+HEADER STYLES
+------------------------------------------------------*/
+
+#navbar { background: var(--e-dark-gray); }
+
+#navbar .container { display: flex; flex-direction: row; justify-content: space-between; }
+
+.navbar-btn-label { color: var(--e-yellow); }
+
+/*------------------------------------------------------
+HOME STYLES
+------------------------------------------------------*/
+
+.wrap-home-header {
+    background: var(--e-dark-gray);
+    color: var(--e-white);
+    height: calc(100vh - 70px);
+}
+
+.wrap-home-header h1 { font-size: 2.5rem; }
+.wrap-home-header p { font-size: 1.2rem; font-weight: lighter;}
+
+.title-line { border-bottom: 4px solid var(--e-yellow); padding-bottom: 10px; }
+
+.wrap-calltoaction { background: var(--e-light-blue); }
+
+/*------------------------------------------------------
+FOOTER STYLES
+------------------------------------------------------*/
+
+footer { background: var(--e-dark-gray); color: var(--e-white); }
+
+/*------------------------------------------------------
+RESPONSIVE STYLES
+------------------------------------------------------*/
+
+@media screen and (max-width: 900px)
+{
+
+    .wrap-home-header { padding-bottom: 65px; padding-top: 95px; }
+    .wrap-home-header, .wrap-home-header .container { height: auto !important; }
+
+    .wrap-home-header h1 { font-size: 1.6rem; }
+    .wrap-home-header p { font-size: 1rem; }
+
+}
