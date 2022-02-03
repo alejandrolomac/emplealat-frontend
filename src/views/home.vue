@@ -1,7 +1,7 @@
 <template>
     <div class="wrap-home-header">
         <div class="container h-100">
-            <div class="col-6 col-md-10 h-100 center-flex-v">
+            <div class="col-6 col-md-10 h-100 flex-hc flex-col">
                 <h1>¡Únete a la mayor red de oportunidades en Latinoamérica!</h1>
                 <p class="o-05">Encuentra la oportunidad que tanto necesitas</p>
                 <a href="#" class="btn mt-2">Buscar Empleo</a>
@@ -17,12 +17,14 @@
     <div class="container pt-5 pb-5">
         <h2 class="mb-3 title-line">Empleos Destacados</h2>
         
-        <div class="three-cards">
-            <div class="card" v-for="item in contents" :key="item.id">
-                <h2><a href="#">{{item.title}}</a></h2>
+        <div class="three-cards featured-work">
+            <a class="card" v-for="(item, index) in contents" :key="index" href="#">
+                <span class="bubble">Urgente</span>
+                <h2>{{item.title}}</h2>
                 <p class="pb-1"><i class="fa fa-map-marker"></i>{{item.location}}</p>
-                <span class="t-muted"><i class="fa fa-clock"></i>{{item.workingday}}</span>
-            </div>
+                <p class="pb-1"><i class="fa fa-business-time"></i>{{item.workingday}}</p>
+                <p class="t-muted"><i class="fa fa-clock"></i> {{ increment(new Date(item.created_at).getTime()) }}</p>
+            </a>
 
         </div><!-- cards -->
 
@@ -30,12 +32,19 @@
 
     <div class="wrap-calltoaction">
         <div class="container pt-5 pb-5">
-            <div class="row center-flex-v2">
+            <div class="row flex-vc">
                 <div class="col-3 col-md-10">
-                    <img src="https://picsum.photos/200/200" class="br-4" />
+                    <img src="../assets/images/imghome01.png" />
                 </div>
                 <div class="col-7 col-md-10">
-                    <p>Únete a nuestra red de oportunidades, y encuentra el empleo que tanto quieres</p>
+                    <h2>Te ayudamos a encontrar un empleo mejor</h2>
+                    <p>Haz que tu currículum sea visible para miles de empresas en nuestra bolsa de trabajo</p>
+                    <ul class="p-0 ml-2">
+                        <li><i class="fa fa-check-circle mr-1 t-muted"></i><strong>Registro gratuito</strong> Encuentra tu próximo trabajo hoy.</li>
+                        <li><i class="fa fa-check-circle mr-1 t-muted"></i><strong>Ofertas cada día</strong> Empleos que se ajustan a tu perfil.</li>
+                        <li><i class="fa fa-check-circle mr-1 t-muted"></i><strong>Alertas personalizadas</strong> Tú crea alertas de empleo y nosotros te avisaremos.</li>
+                        <li><i class="fa fa-check-circle mr-1 t-muted"></i><strong>Completa tu perfil</strong> Muéstrate profesional y ganarás visibilidad.</li>
+                    </ul>
                 </div>
             </div>
         </div>
@@ -45,15 +54,49 @@
 <script>
     import axios from "axios"
 
+    const DATE_UNITS = {
+        day: 86400,
+        hour: 3600,
+        minute: 60,
+        second: 1
+    }
+
+    const getSecondsDiff = timestamp => (Date.now() - timestamp) / 1000
+
+    const getUnitAndValueDate = (secondsElapsed) => {
+        const entries = Object.entries(DATE_UNITS)
+
+        for(const [unit, secondsInUnit] of entries) {
+            const match = secondsElapsed >= secondsInUnit || unit === 'second'
+            if ( match ) {
+                const value = Math.floor( secondsElapsed / secondsInUnit ) * -1
+                return { value, unit }
+            }
+        }
+    }
+
+    const timeAgo = (timestamp, locale) => {
+        const rtf = new Intl.RelativeTimeFormat(locale)
+        const secondsElapsed = getSecondsDiff(timestamp)
+        const { value, unit } = getUnitAndValueDate(secondsElapsed)
+        return rtf.format(value, unit)
+    }
+
     export default {
         name: 'Home',
+
         data() {
-            return {
-                contents: null,
+            return { 
+                contents: null
             }
         },
         mounted() {
             axios.get('/trabajos').then(response => (this.contents = response.data))
+        },
+        methods: {
+            increment(date) {
+                return timeAgo(date)
+            }
         }
     }
 </script>

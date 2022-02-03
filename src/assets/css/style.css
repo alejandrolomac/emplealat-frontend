@@ -10,6 +10,7 @@ Variables
 
 :root 
 {
+    --e-light-white: #fff;
     --e-white : #ddd;
     --e-light-gray: #ccc;
     --e-medium-gray: #667583;
@@ -17,6 +18,7 @@ Variables
     --e-black: #000;
     --e-yellow: #edb84f;
     --e-hover-yellow: #ed984f;
+    --e-bubble-red: #ed564f;
     --e-light-blue: #f2f7fb;
 }
 
@@ -77,6 +79,10 @@ HEADER STYLES
 
 .navbar-btn-label { color: var(--e-yellow); }
 
+.featured-work .card { background: var(--e-yellow); border: none; position: relative; min-height: 200px; }
+.featured-work .card h2 { color: var(--e-light-white); font-weight: normal; }
+.featured-work .card p { color: var(--e-dark-gray); }
+
 /*------------------------------------------------------
 HOME STYLES
 ------------------------------------------------------*/
@@ -94,11 +100,51 @@ HOME STYLES
 
 .wrap-calltoaction { background: var(--e-light-blue); }
 
+.bubble
+{
+    background: var(--e-bubble-red);
+    color: var(--e-light-white);
+    width: max-content;
+    padding: 5px 15px;
+    border-radius: 40px;
+    position: absolute;
+    top: -15px;
+    right: 5px;
+    animation: pulsate 1.2s linear infinite;
+}
+
+.wrap-calltoaction ul li { list-style: none; }
+.wrap-calltoaction ul li strong, .wrap-calltoaction ul li svg { color: var(--e-yellow); }
+.wrap-calltoaction ul li svg { opacity: .5; }
+
 /*------------------------------------------------------
 FOOTER STYLES
 ------------------------------------------------------*/
 
 footer { background: var(--e-dark-gray); color: var(--e-white); }
+
+
+/*------------------------------------------------------
+ANIMATIONS
+------------------------------------------------------*/
+@keyframes pulsate
+{
+    0%{
+        transform: scale(1);
+    }
+    25%{
+        transform: scale(1.04);
+    }
+    50%{
+        transform: scale(1.08);
+    }
+    75%{
+        transform: scale(1.04);
+    }
+    100%{
+        transform: scale(1);
+    }
+  }
 
 /*------------------------------------------------------
 RESPONSIVE STYLES
@@ -106,11 +152,14 @@ RESPONSIVE STYLES
 
 @media screen and (max-width: 900px)
 {
-
     .wrap-home-header { padding-bottom: 65px; padding-top: 95px; }
     .wrap-home-header, .wrap-home-header .container { height: auto !important; }
 
     .wrap-home-header h1 { font-size: 1.6rem; }
     .wrap-home-header p { font-size: 1rem; }
 
+    .featured-work .card { margin-bottom: .8rem; }
+
+    .wrap-calltoaction .row { flex-direction: column; }
+    .wrap-calltoaction .col-md-10 { justify-content: center; display: flex;}
 }
