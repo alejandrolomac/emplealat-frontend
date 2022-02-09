@@ -122,6 +122,8 @@ FOOTER STYLES
 ------------------------------------------------------*/
 
 footer { background: var(--e-dark-gray); color: var(--e-white); }
+footer ul li { list-style: none; }
+footer h3 { font-size: 1rem; font-weight: bold; }
 
 
 /*------------------------------------------------------

@@ -16,8 +16,8 @@
 
             <nav id="navbar-menu">
                 <ul>
-                    <li class="ml-3"><a href="#" tooltip="Inicio" flow="down"><i class="fa fa-home"></i></a></li>
-                    <li class="ml-3"><a href="#" tooltip="Trabajos" flow="down"><i class="fa fa-building"></i></a></li>
+                    <li class="ml-3"><router-link :to="{ name: 'Home' }" tooltip="Inicio" flow="down"><i class="fa fa-home"></i></router-link></li>
+                    <li class="ml-3"><router-link :to="{ name:'Home' }" tooltip="Trabajos" flow="down"><i class="fa fa-building"></i></router-link></li>
                     <li class="ml-3"><a href="#" tooltip="Contactanos" flow="down"><i class="fa fa-envelope"></i></a></li>
                     <li class="ml-3"><a href="#" tooltip="Perfil" flow="down"><i class="fas fa-user"></i></a></li>
                 </ul>
