@@ -23,7 +23,7 @@
                 <h2>{{item.title}}</h2>
                 <p class="pb-1"><i class="fa fa-map-marker"></i>{{item.location}}</p>
                 <p class="pb-1"><i class="fa fa-business-time"></i>{{item.workingday}}</p>
-                <p class="t-muted"><i class="fa fa-clock"></i> {{ increment(new Date(item.created_at).getTime()) }}</p>
+                <p class="t-muted"><i class="fa fa-clock"></i> {{ timestyle(new Date(item.created_at).getTime()) }}</p>
             </router-link>
 
         </div><!-- cards -->
@@ -94,7 +94,7 @@
             axios.get('/trabajos').then(response => (this.contents = response.data))
         },
         methods: {
-            increment(date) {
+            timestyle(date) {
                 return timeAgo(date)
             }
         }
