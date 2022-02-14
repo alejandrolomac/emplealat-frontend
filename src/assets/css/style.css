@@ -96,9 +96,9 @@ HEADER STYLES
 .featured-work .card h2 { color: var(--e-light-white); font-weight: normal; }
 .featured-work .card p { color: var(--e-dark-gray); }
 
-.similary-work .card { position: relative; margin-bottom: 30px; }
-.similary-work .card h4 { font-weight: normal; }
-.similary-work .card p { color: var(--e-dark-gray); }
+.wide-work .card { position: relative; margin-bottom: 15px; }
+.wide-work .card h4 { font-weight: normal; }
+.wide-work .card p { color: var(--e-dark-gray); }
 
 /*------------------------------------------------------
 HOME STYLES

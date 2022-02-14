@@ -1,23 +1,8 @@
 <template>
 
-    <!-- <div class="container pt-5 pb-5" v-for="work in detailwork" :key="work.id">
-        <h2>{{ work.title }}</h2>
-        <p>Autor: {{ authorwork.username }}</p>
-        <p>Descripcion: {{ work.content }}</p>
-        <p>Requisitos: {{ work.requirements }}</p>
-        <p>Creado: {{ work.created_at }}</p>
-        <p>Categoria: {{ work.category }}</p>
-        <p>Ubicaciones: {{ work.location }}</p>
-        <p>Tipo de trabajo: {{ work.typework }}</p>
-        <p>Salario: {{ work.salary }}</p>
-        <p>Horario: {{ work.workingday }}</p>
-        <p>Tipo de contrato: {{ work.contract }}</p>
-        <p>Experiencia: {{ work.experience }}</p>
-    </div> -->
-
-    <div v-for="work in detailwork" :key="work.id">
+    <div v-for="(work, index) in detailwork" :key="index">
         <div class="container pt-5 pb-5 wrap-detailwork"  v-if="work.id === $route.params.id">
-
+            <h1>INDEX: {{index}}</h1>
             <main class="col-7 col-md-10">
                 <section>
                     <h2 class="t-center">{{ work.title }}</h2>
@@ -83,14 +68,14 @@
                     <img src="https://picsum.photos/900/150" />
                     <h3 class="title-line mb-5 mt-5">Empleos Similares</h3>
         
-                    <div class="similary-work">
-                        <a class="card" v-for="(item, index) in contents" :key="index" href="#">
+                    <div class="wide-work">
+                        <router-link class="card" v-for="(item, index) in contents" :key="index" :to="{ name:'DetailWork', params: { id: item.id, author_id: item.author_id } }">
                             <span class="bubble">Urgente</span>
                             <h4>{{item.title}}</h4>
                             <p class="pb-1"><i class="fa fa-map-marker"></i>{{item.location}}</p>
                             <p class="pb-1"><i class="fa fa-business-time"></i>{{item.workingday}}</p>
                             <p class="t-muted"><i class="fa fa-clock"></i> {{ timestyle(new Date(item.created_at).getTime()) }}</p>
-                        </a>
+                        </router-link>
 
                     </div>
 
@@ -104,9 +89,6 @@
         </div>
     </div>
     
-    <!--<div class="container pt-5 pb-5">
-        
-    </div>-->
     
 </template>
 
@@ -152,6 +134,7 @@
             }
         },
         mounted() {
+            this.$router.go()
             axios.get('/t/' + this.$route.params.id).then(response => (this.detailwork = response.data))
             axios.get('/usuario/' + this.$route.params.author_id).then(response => (this.authorwork = response.data))
             axios.get('/trabajos').then(response => (this.contents = response.data))

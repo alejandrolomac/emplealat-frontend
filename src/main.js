@@ -11,7 +11,7 @@ import '@fortawesome/fontawesome-free/js/all.js'
 //Vue.config.productionTip = false
 
 //Styles 
-import "@/assets/css/glena.css";
-import "@/assets/css/style.css";
+import "@/assets/css/glena.css"
+import "@/assets/css/style.css"
 
 createApp(App).use(router).mount('#app')
