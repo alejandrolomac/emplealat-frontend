@@ -93,6 +93,7 @@
 
 <script>
     import axios from "axios"
+    import lodash from 'lodash' 
 
     const DATE_UNITS = {
         day: 86400,
@@ -136,7 +137,7 @@
         mounted() {
             axios.get('/t/' + this.$route.params.id).then(response => (this.detailwork = response.data))
             axios.get('/usuario/' + this.$route.params.author_id).then(response => (this.authorwork = response.data))
-            axios.get('/trabajos').then(response => (this.contents = response.data))
+            axios.get('/trabajos').then(response => (this.contents = lodash.take(lodash.orderBy(response.data, 'created_at', ['desc']), 3)))
         },
         methods: {
             timestyle(date) {

@@ -33,6 +33,7 @@
 
 <script>
     import axios from "axios"
+    import lodash from 'lodash' 
 
     const DATE_UNITS = {
         day: 86400,
@@ -72,26 +73,15 @@
         name: 'AllWork',
 
         data() {
-            //return { 
-            //    contents: null
-            //}
             return  {
                 contents: [],
                 filters,
                 term: '',
-                str: '',
-                type: '',
                 filteredWorks: []
             }
         },
         mounted() {
-            axios.get('/trabajos', { params: { _limit: 2 } }).then(response => (this.contents = response.data))
-            //axios.get('/trabajos')
-            //    .then(response => {
-            //    const works = response.data
-            //    this.contents = works.filter(product => product.category.includes('Ventas'))
-            //})
-            //.sort(function(a, b) { return a.created_at - b.created_at })
+            axios.get('/trabajos').then(response => (this.contents = lodash.orderBy(response.data, 'created_at', ['desc'])))
         },
         methods: {
             timestyle(date) {
@@ -103,23 +93,20 @@
                     axios.get('/trabajos')
                         .then(response => {
                         const works = response.data
-                        this.contents = works.filter(product => product.category.includes(catName))
-                    }).reverse()
+                        this.contents = lodash.orderBy(works.filter(product => product.category.includes(catName)), 'created_at', ['desc'])
+                    })
                 }
             },
             search (term) {
                 this.resetPosts()
-                //this.contents = this.contents.filter((item) => {
-                //    return item.title.toLowerCase().includes(term.toLowerCase())
-                //})
                 axios.get('/trabajos')
                     .then(response => {
                     const works = response.data
-                    this.contents = works.filter(product => product.title.toLowerCase().includes(term.toLowerCase()))
+                    this.contents = lodash.orderBy(works.filter(product => product.title.toLowerCase().includes(term.toLowerCase())), 'created_at', ['desc'])
                 })
             },
             resetPosts () {
-                this.contents = axios.get('/trabajos').then(response => (this.contents = response.data))
+                this.contents = axios.get('/trabajos').then(response => (this.contents = lodash.orderBy(response.data, 'created_at', ['desc'])))
             }
         }
         

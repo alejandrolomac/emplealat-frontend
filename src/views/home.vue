@@ -53,6 +53,7 @@
 
 <script>
     import axios from "axios"
+    import lodash from 'lodash' 
 
     const DATE_UNITS = {
         day: 86400,
@@ -87,11 +88,11 @@
 
         data() {
             return { 
-                contents: null
+                contents: []
             }
         },
         mounted() {
-            axios.get('/trabajos').then(response => (this.contents = response.data))
+            axios.get('/trabajos').then(response => (this.contents = lodash.take(lodash.orderBy(response.data, 'created_at', ['desc']), 3)))
         },
         methods: {
             timestyle(date) {
