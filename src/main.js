@@ -1,6 +1,4 @@
-//import { compileTemplate } from '@vue/compiler-sfc'
 import { createApp } from 'vue'
-//import Vue from 'vue'
 import App from './App'
 import router from './router'
 

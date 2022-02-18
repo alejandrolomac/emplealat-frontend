@@ -4,6 +4,13 @@
         <div class="container">
             <p class="o-05">Buscador</p>
             <a href="#" class="btn mt-2">Buscar Empleo</a>
+            <label for="search">
+                Search
+                <input id="search" v-model="term" @keypress.enter="search(term)" />
+            </label>
+            <p v-for="filter in filters" :key="filter" @click="() => filterPosts(filter)" >
+                {{ filter }}
+            </p>
         </div>
     </div>
 
@@ -19,6 +26,7 @@
                 </router-link>
             </section>
         </main><!-- End of Content Work -->
+        
     </div>
 
 </template>
@@ -54,20 +62,64 @@
         return rtf.format(value, unit)
     }
 
+    const filters = [
+        'Todos',
+        'Informatica',
+        'Ventas'
+    ]
+
     export default {
         name: 'AllWork',
 
         data() {
-            return { 
-                contents: null
+            //return { 
+            //    contents: null
+            //}
+            return  {
+                contents: [],
+                filters,
+                term: '',
+                str: '',
+                type: '',
+                filteredWorks: []
             }
         },
         mounted() {
-            axios.get('/trabajos').then(response => (this.contents = response.data))
+            axios.get('/trabajos', { params: { _limit: 2 } }).then(response => (this.contents = response.data))
+            //axios.get('/trabajos')
+            //    .then(response => {
+            //    const works = response.data
+            //    this.contents = works.filter(product => product.category.includes('Ventas'))
+            //})
+            //.sort(function(a, b) { return a.created_at - b.created_at })
         },
         methods: {
             timestyle(date) {
                 return timeAgo(date)
+            },
+            filterPosts(catName) {
+                this.resetPosts()
+                if(catName !== 'Todos') {
+                    axios.get('/trabajos')
+                        .then(response => {
+                        const works = response.data
+                        this.contents = works.filter(product => product.category.includes(catName))
+                    }).reverse()
+                }
+            },
+            search (term) {
+                this.resetPosts()
+                //this.contents = this.contents.filter((item) => {
+                //    return item.title.toLowerCase().includes(term.toLowerCase())
+                //})
+                axios.get('/trabajos')
+                    .then(response => {
+                    const works = response.data
+                    this.contents = works.filter(product => product.title.toLowerCase().includes(term.toLowerCase()))
+                })
+            },
+            resetPosts () {
+                this.contents = axios.get('/trabajos').then(response => (this.contents = response.data))
             }
         }
         

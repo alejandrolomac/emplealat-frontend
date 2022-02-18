@@ -1,8 +1,7 @@
 <template>
 
-    <div v-for="(work, index) in detailwork" :key="index">
+    <div v-for="work in detailwork" :key="work.id">
         <div class="container pt-5 pb-5 wrap-detailwork"  v-if="work.id === $route.params.id">
-            <h1>INDEX: {{index}}</h1>
             <main class="col-7 col-md-10">
                 <section>
                     <h2 class="t-center">{{ work.title }}</h2>
@@ -130,11 +129,11 @@
             return { 
                 detailwork: null,
                 authorwork: null,
-                contents: null
+                contents: null,
+                componentKey: 0
             }
         },
         mounted() {
-            this.$router.go()
             axios.get('/t/' + this.$route.params.id).then(response => (this.detailwork = response.data))
             axios.get('/usuario/' + this.$route.params.author_id).then(response => (this.authorwork = response.data))
             axios.get('/trabajos').then(response => (this.contents = response.data))
