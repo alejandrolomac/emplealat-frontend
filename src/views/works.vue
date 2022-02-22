@@ -6,9 +6,9 @@
             <a href="#" class="btn mt-2">Buscar Empleo</a>
             <label for="search">
                 Search
-                <input id="search" v-model="term" @keypress.enter="search(term)" />
+                <input id="search" v-model="term" @keypress.enter="workFiltration(term, filter)" />
             </label>
-            <p v-for="filter in filters" :key="filter" @click="() => filterPosts(filter)" >
+            <p v-for="filter in filters" :key="filter" @click="() => workFiltration(term, filter)" >
                 {{ filter }}
             </p>
         </div>
@@ -87,22 +87,28 @@
             timestyle(date) {
                 return timeAgo(date)
             },
-            filterPosts(catName) {
+            workFiltration (term, catName) {
                 this.resetPosts()
-                if(catName !== 'Todos') {
-                    axios.get('/trabajos')
-                        .then(response => {
-                        const works = response.data
-                        this.contents = lodash.orderBy(works.filter(product => product.category.includes(catName)), 'created_at', ['desc'])
-                    })
-                }
-            },
-            search (term) {
-                this.resetPosts()
+                console.log("term: " + term + " cat: " + catName)
                 axios.get('/trabajos')
                     .then(response => {
                     const works = response.data
-                    this.contents = lodash.orderBy(works.filter(product => product.title.toLowerCase().includes(term.toLowerCase())), 'created_at', ['desc'])
+
+                    if(term !== 'undefined' || catName !== 'undefined') {
+                        console.log("las dos")
+                        if(catName !== 'Todos') {
+                            const filterwork = lodash.orderBy(works.filter(product => product.title.toLowerCase().includes(term.toLowerCase())), 'created_at', ['desc'])
+                            this.contents = lodash.orderBy(filterwork.filter(product => product.category.includes(catName)), 'created_at', ['desc'])
+                        }
+                    }else if(term || catName === 'undefined') {
+                        console.log("term")
+                        this.contents = lodash.orderBy(works.filter(product => product.title.toLowerCase().includes(term.toLowerCase())), 'created_at', ['desc'])
+                    }else if(catName || term === 'undefined') {
+                        console.log("catname")
+                        if(catName !== 'Todos') {
+                            this.contents = lodash.orderBy(works.filter(product => product.category.includes(catName)), 'created_at', ['desc'])
+                        }
+                    }
                 })
             },
             resetPosts () {
